@@ -8,7 +8,6 @@ interface LivestockService {
 
     @GET("/api/get_users.php")
     suspend fun getWorkers():LivestockResponse
-//    suspend fun getWorkers(): ArrayList<Response>
 //    suspend fun getWorkers(): Response<LivestockResponse>
 
 }
