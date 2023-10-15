@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/myHomeFragment">
+
+    <fragment
+        android:id="@+id/addFarmerFragment"
+        android:name="com.noma.livestockcare.fragments.AddFarmerFragment"
+        android:label="fragment_add_farmer"
+        tools:layout="@layout/fragment_add_farmer" />
+    <fragment
+        android:id="@+id/myHomeFragment"
+        android:name="com.noma.livestockcare.fragments.MyHomeFragment"
+        android:label="fragment_my_home"
+        tools:layout="@layout/fragment_my_home" >
+        <action
+            android:id="@+id/action_myHomeFragment_to_listWorkersFragment"
+            app:destination="@id/listWorkersFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listWorkersFragment"
+        android:name="com.noma.livestockcare.fragments.ListWorkersFragment"
+        android:label="fragment_list_workers"
+        tools:layout="@layout/fragment_list_workers" >
+        <action
+            android:id="@+id/action_listWorkersFragment_to_addFarmerFragment"
+            app:destination="@id/addFarmerFragment" />
+    </fragment>
+</navigation>

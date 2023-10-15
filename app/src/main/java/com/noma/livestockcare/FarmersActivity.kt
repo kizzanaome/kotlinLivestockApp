@@ -2,14 +2,15 @@ package com.noma.livestockcare
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.TextView
+import android.view.Menu
+import android.view.MenuItem
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.noma.livestockcare.data.ActivityAdapter
-import com.noma.livestockcare.data.ActivityModel
-import com.noma.livestockcare.data.LivestockResponse
-import com.noma.livestockcare.data.RetrofitInstance
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.noma.livestockcare.adapter.ActivityAdapter
+import com.noma.livestockcare.fragments.AddFarmerFragment
+import com.noma.livestockcare.retrofit.RetrofitInstance
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,6 +20,16 @@ class FarmersActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_farmers)
+
+        //Opens the add farmer fragment
+        val addFarmerButton = findViewById<FloatingActionButton>(R.id.add_farmer)
+        addFarmerButton.setOnClickListener{
+            supportFragmentManager.beginTransaction().add(R.id.container, AddFarmerFragment()).commit()
+        }
+
+        val NavFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView4 )as NavHostFragment
+        val controller = NavFragment.navController
+
 
 
 //        list.add(ActivityModel(R.drawable.avatar_2, "Douglas Kato", "Worker"))
@@ -33,10 +44,8 @@ class FarmersActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 //
         CoroutineScope(Dispatchers.IO).launch {
-
             val apiService = RetrofitInstance().createRetrofit()
             val apiResponse = apiService.getWorkers()
-
             val users = apiResponse.response
 
             withContext(Dispatchers.Main) {
@@ -44,5 +53,17 @@ class FarmersActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+        when(id){
+            R.id.add_farmer ->{supportFragmentManager.beginTransaction().add(R.id.container, AddFarmerFragment()).commit()}
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

@@ -1,4 +1,4 @@
-package com.noma.livestockcare.data
+package com.noma.livestockcare.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.noma.livestockcare.R
+import com.noma.livestockcare.model.User
 
 //class ActivityAdapter(var data:ArrayList<Response>):RecyclerView.Adapter<ActivityAdapter.ActivityViewHolder>() {
 class ActivityAdapter():RecyclerView.Adapter<ActivityAdapter.ActivityViewHolder>() {
@@ -20,8 +21,8 @@ class ActivityAdapter():RecyclerView.Adapter<ActivityAdapter.ActivityViewHolder>
     }
 
     class ActivityViewHolder(itemView:View):ViewHolder(itemView){
-        val worker_name = itemView.findViewById<TextView>(R.id.worker_name)
-        val worker_role = itemView.findViewById<TextView>(R.id.worker_role)
+        val worker_name = itemView.findViewById<TextView>(R.id.product_name)
+        val worker_role = itemView.findViewById<TextView>(R.id.product_description)
         val worker_image = itemView.findViewById<ImageView>(R.id.worker_image)
     }
 

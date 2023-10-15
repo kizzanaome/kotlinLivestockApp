@@ -1,11 +1,12 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
     namespace = "com.noma.livestockcare"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.noma.livestockcare"
@@ -33,6 +34,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -49,4 +54,21 @@ dependencies {
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.google.code.gson:gson:2.9.0")
+
+    implementation("com.ericktijerou.koleton:koleton:1.0.0-beta01")
+
+    val nav_version = "2.7.1"
+    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+
+//    room dependencies
+    val room_version = "2.5.2"
+    kapt("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-runtime:2.5.2")
+    implementation("androidx.room:room-ktx:2.5.2")
+}
+
+kapt{
+    correctErrorTypes = true
+    useBuildCache = true
 }
