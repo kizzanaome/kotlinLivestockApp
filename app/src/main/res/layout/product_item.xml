@@ -6,13 +6,16 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/price_value"
+        android:id="@+id/product_price_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_medium"
         android:text="@string/price_value"
+        android:textAlignment="textEnd"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/constraintLayout5"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
@@ -27,18 +30,18 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/worker_image"
+            android:id="@+id/product_image"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:contentDescription="@string/worker_image"
-            android:src="@drawable/avatar_2"
-            app:srcCompat="@drawable/avatar_2" />
+            android:src="@drawable/product"
+            app:srcCompat="@drawable/product" />
 
     </androidx.cardview.widget.CardView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout5"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         app:flow_horizontalAlign="start"
@@ -71,13 +74,13 @@
             app:layout_wrapBehaviorInParent="vertical_only" />
 
         <TextView
-            android:id="@+id/product_description2"
+            android:id="@+id/product_quantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:fontFamily="@font/poppins_regular"
             android:text="@string/product_quantity"
-            android:textColor="?android:attr/textColorHint"
+            android:textColor="?android:attr/statusBarColor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/product_description" />
 

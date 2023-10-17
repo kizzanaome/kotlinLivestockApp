@@ -24,7 +24,7 @@ interface WorkersService {
         @Field("phone")phone:String,
         @Field("password")password:String,
         @Field("age")age:String,
-        @Field("gender")gender:String,
+        @Field("gender")gender:String?,
         @Field("image")image:String,
         ):WorkersResponse
 }

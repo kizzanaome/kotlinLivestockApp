@@ -22,7 +22,7 @@ class FarmersActivity : AppCompatActivity() {
         setContentView(R.layout.activity_farmers)
 
         //Opens the add farmer fragment
-        val addFarmerButton = findViewById<FloatingActionButton>(R.id.add_farmer)
+        val addFarmerButton = findViewById<FloatingActionButton>(R.id.add_product)
         addFarmerButton.setOnClickListener{
             supportFragmentManager.beginTransaction().add(R.id.container, AddFarmerFragment()).commit()
         }
@@ -62,7 +62,7 @@ class FarmersActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         when(id){
-            R.id.add_farmer ->{supportFragmentManager.beginTransaction().add(R.id.container, AddFarmerFragment()).commit()}
+            R.id.add_product ->{supportFragmentManager.beginTransaction().add(R.id.container, AddFarmerFragment()).commit()}
         }
         return super.onOptionsItemSelected(item)
     }

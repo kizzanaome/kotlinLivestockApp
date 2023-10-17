@@ -21,6 +21,10 @@ class MyHomeFragment : Fragment() {
         inflater.findViewById<CardView>(R.id.workers_card).setOnClickListener{
             findNavController().navigate(R.id.action_myHomeFragment_to_listWorkersFragment)
         }
+
+        inflater.findViewById<CardView>(R.id.products_card).setOnClickListener{
+            findNavController().navigate(R.id.action_myHomeFragment_to_listProductsFragment)
+        }
         return inflater
     }
 

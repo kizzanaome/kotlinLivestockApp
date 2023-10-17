@@ -14,4 +14,10 @@ class DBBuilder {
         return db
     }
 
+    fun createProductDB(context:Context): ProductsDatabase {
+//        val db = Room.databaseBuilder(context, ProductsDatabase::class.java, "roomDB").build()
+        val db = Room.databaseBuilder(context, ProductsDatabase::class.java, "roomDB").fallbackToDestructiveMigration().build()
+        return db
+    }
+
 }

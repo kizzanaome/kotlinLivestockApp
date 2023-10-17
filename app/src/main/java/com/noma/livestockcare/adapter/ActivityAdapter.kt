@@ -23,7 +23,7 @@ class ActivityAdapter():RecyclerView.Adapter<ActivityAdapter.ActivityViewHolder>
     class ActivityViewHolder(itemView:View):ViewHolder(itemView){
         val worker_name = itemView.findViewById<TextView>(R.id.product_name)
         val worker_role = itemView.findViewById<TextView>(R.id.product_description)
-        val worker_image = itemView.findViewById<ImageView>(R.id.worker_image)
+        val worker_image = itemView.findViewById<ImageView>(R.id.product_image)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActivityViewHolder {

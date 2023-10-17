@@ -21,7 +21,7 @@
     <string name="first_name">First Name</string>
     <string name="save">Save</string>
     <string name="all_workers">Workers</string>
-    <string name="add_workers">Add Worker</string>
+    <string name="add_workers">Save</string>
 
     <string name="f_name">First Name</string>
     <string name="l_name">Last Name</string>
@@ -41,4 +41,6 @@
     <string name="price_value">shs 10,000</string>
     <string name="product_quantity">Qty: 90 pieces</string>
     <string name="success_toast">Worker added successfully</string>
+    <string name="radio_value">Radio Value</string>
+    <string name="all_products">All products</string>
 </resources>

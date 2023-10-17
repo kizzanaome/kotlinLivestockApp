@@ -12,6 +12,6 @@ data class WorkersModel(
     val password:String,
     val age:String?,
     val role:String,
-    val gender:String,
+    val gender:String?,
     val image:String?
 )

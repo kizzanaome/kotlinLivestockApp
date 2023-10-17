@@ -6,13 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.noma.livestockcare.MainActivity
 import com.noma.livestockcare.R
 import com.noma.livestockcare.adapter.ActivityAdapter
 import com.noma.livestockcare.model.DBBuilder
@@ -36,7 +36,14 @@ class ListWorkersFragment : Fragment() {
         val inflater = inflater.inflate(R.layout.fragment_list_workers, container, false)
         inflater.findViewById<ProgressBar>(R.id.loader).visibility = View.VISIBLE
 
-        val addFarmerButton = inflater.findViewById<FloatingActionButton>(R.id.add_farmer)
+        val backButton = inflater.findViewById<ImageView>(R.id.arrowback)
+
+        backButton.setOnClickListener{
+            findNavController().navigate(R.id.action_listWorkersFragment_to_myHomeFragment)
+        }
+
+        /** Floating button that navigates to adding a single worker **/
+        val addFarmerButton = inflater.findViewById<FloatingActionButton>(R.id.add_product)
         addFarmerButton.setOnClickListener{
             findNavController().navigate(R.id.action_listWorkersFragment_to_addFarmerFragment)
         }

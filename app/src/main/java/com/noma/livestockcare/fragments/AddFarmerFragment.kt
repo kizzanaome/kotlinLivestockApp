@@ -3,7 +3,6 @@ package com.noma.livestockcare.fragments
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,21 +10,20 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
-import com.noma.livestockcare.MainActivity
 import com.noma.livestockcare.R
 import com.noma.livestockcare.databinding.FragmentAddFarmerBinding
 import com.noma.livestockcare.model.DBBuilder
-import com.noma.livestockcare.model.User
 import com.noma.livestockcare.model.WorkersModel
 import com.noma.livestockcare.retrofit.RetrofitInstance
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
-import kotlin.math.log
 
 
 class AddFarmerFragment : Fragment() {
@@ -34,44 +32,51 @@ class AddFarmerFragment : Fragment() {
     val binding get() = _binding
 
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-//        val inflater = inflater.inflate(R.layout.fragment_add_farmer, container, false)
-//        val first_name = inflater.findViewById<EditText>(R.id.first_name )
-//        return inflater
-//
-//        val binding = FragmentAddFarmerBinding.inflate(layoutInflater)
-//        val name = binding.firstName
-//        return binding.root
-
-
-
-//        _binding = FragmentAddFarmerBinding.inflate(layoutInflater)
-//        val first_name = binding?.editFName
-//        val last_name = binding?.editLName
-//        val add_worker = binding?.addWorkerBtn
-//        return binding?.root
-
         val inflater = inflater.inflate(R.layout.fragment_add_farmer, container, false)
 
+        val backButton = inflater.findViewById<ImageView>(R.id.arrowback)
+
+        backButton.setOnClickListener{
+            findNavController().navigate(R.id.action_addFarmerFragment_to_listWorkersFragment)
+        }
+
+        val  radio_male = inflater.findViewById<RadioButton>(R.id.radio_male)
+         radio_male.setOnClickListener {}
+
+        val  radio_female = inflater.findViewById<RadioButton>(R.id.radio_female)
+        radio_female.setOnClickListener {}
+
+
+        /** Save worker daa in the database**/
         val addWorkerButton = inflater.findViewById<Button>(R.id.add_worker_btn)
-
-
         addWorkerButton.setOnClickListener{
-            val first_name = inflater.findViewById<TextInputEditText>(R.id.edit_f_name).text.toString()
-            val last_name = inflater.findViewById<TextInputEditText>(R.id.edit_l_name).text.toString()
-            val phone_number = inflater.findViewById<TextInputEditText>(R.id.edit_phone).text.toString()
-            val password = inflater.findViewById<TextInputEditText>(R.id.edit_password).text.toString()
-            val role = inflater.findViewById<TextInputEditText>(R.id.edit_title).text.toString()
-            val age = inflater.findViewById<TextInputEditText>(R.id.edit_age).text.toString()
-
+            /** Launch Couroutines to submit data in the room and in the api **/
              CoroutineScope(Dispatchers.IO).launch {
 
+                 val first_name = inflater.findViewById<TextInputEditText>(R.id.edit_f_name).text.toString()
+                 val last_name = inflater.findViewById<TextInputEditText>(R.id.edit_l_name).text.toString()
+                 val phone_number = inflater.findViewById<TextInputEditText>(R.id.edit_phone).text.toString()
+                 val password = inflater.findViewById<TextInputEditText>(R.id.edit_password).text.toString()
+                 val role = inflater.findViewById<TextInputEditText>(R.id.edit_title).text.toString()
 
-                try {
+                 val age = inflater.findViewById<TextInputEditText>(R.id.edit_age).text.toString()
+                 val radio_group = inflater.findViewById<RadioGroup>(R.id.gender_radios)
+                 var selectedGender:String? =null
+                 radio_group.setOnCheckedChangeListener(
+                     RadioGroup.OnCheckedChangeListener { group, checkedId ->
+                         val radio: RadioButton = inflater.findViewById(checkedId)
+                          "${radio.text}"
+                     }
+
+                 )
+
+                 try {
                     val dbBuilder = DBBuilder()
                     val db = dbBuilder.createDB(requireContext())
                     val dao = db.workersDao()
@@ -86,13 +91,11 @@ class AddFarmerFragment : Fragment() {
                         image = "image.jpg",
                         password = password,
                         age = age,
-                        gender = "female",
+                        gender = "Female",
                     )
                     val insertQuery = dao.insertWorker(worker)
-                    Log.d("insertQuery", "$insertQuery")
 
-
-                    /** insert data to the API **/
+                     /** insert data to the API **/
                     val apiService = RetrofitInstance().createRetrofit()
                     val apiResponse = apiService.addWorker(
                         first_name,
@@ -101,29 +104,28 @@ class AddFarmerFragment : Fragment() {
                         phone_number,
                         password,
                         age,
-                         "female",
+                        gender="Female",
                         "image.jpg",
-
                     )
 
 
                     /** Display Toast **/
                     withContext(Dispatchers.Main) {
-                        /** Display Toast **/
                         val customToastLayout = layoutInflater.inflate(R.layout.customlayout,null)
                         val customToast = Toast(requireContext())
+                        customToast.setText("show me something")
 //                        customToast.setText(apiResponse?.message?.toString())
-//                    customToast.setText(apiResponse?.message?.toString())
-                    customToast.view = customToastLayout
-                        customToast.setGravity(Gravity.BOTTOM,0,0)
-                        customToast.duration = Toast.LENGTH_LONG
-                        customToast.show()
+//                        customToast.setText(apiResponse?.message?.toString())
+                        customToast.view = customToastLayout
+                            customToast.setGravity(Gravity.BOTTOM,0,0)
+                            customToast.duration = Toast.LENGTH_LONG
+                            customToast.show()
 
-                    }
+                        }
                 }catch (t:Throwable){
                     Log.d("Worker modal", "$t")
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(requireContext(), "Something went wrong!, Please try again later",Toast.LENGTH_LONG).show()
+                        Toast.makeText(requireContext(), "Worker added successfully!",Toast.LENGTH_LONG).show()
 
                     }
 

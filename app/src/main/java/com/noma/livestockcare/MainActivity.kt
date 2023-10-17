@@ -11,27 +11,6 @@ class MainActivity : AppCompatActivity() {
 
         val NavFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView4 )as NavHostFragment
         val controller = NavFragment.navController
-//
-//        val farmersCard = findViewById<CardView>(R.id.workers_card)
-//        farmersCard.setOnClickListener{
-////            val NavFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView4 )as NavHostFragment
-////
-////            controller.add(R.id.frameLayout, mFragment).commit()
-//
-//
-////            var intent = Intent(this,FarmersActivity::class.java)
-////            startActivity(intent)
-//
-//
-//        }
-
-//        val products = findViewById<CardView>(R.id.products_card)
-//        products.setOnClickListener{
-//            var intent = Intent(this,ProductsActivity::class.java)
-//            startActivity(intent)
-//        }
-
-
     }
 
 

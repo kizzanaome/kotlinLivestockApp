@@ -9,7 +9,11 @@
         android:id="@+id/addFarmerFragment"
         android:name="com.noma.livestockcare.fragments.AddFarmerFragment"
         android:label="fragment_add_farmer"
-        tools:layout="@layout/fragment_add_farmer" />
+        tools:layout="@layout/fragment_add_farmer" >
+        <action
+            android:id="@+id/action_addFarmerFragment_to_listWorkersFragment"
+            app:destination="@id/listWorkersFragment" />
+    </fragment>
     <fragment
         android:id="@+id/myHomeFragment"
         android:name="com.noma.livestockcare.fragments.MyHomeFragment"
@@ -18,6 +22,9 @@
         <action
             android:id="@+id/action_myHomeFragment_to_listWorkersFragment"
             app:destination="@id/listWorkersFragment" />
+        <action
+            android:id="@+id/action_myHomeFragment_to_listProductsFragment"
+            app:destination="@id/listProductsFragment" />
     </fragment>
     <fragment
         android:id="@+id/listWorkersFragment"
@@ -27,5 +34,17 @@
         <action
             android:id="@+id/action_listWorkersFragment_to_addFarmerFragment"
             app:destination="@id/addFarmerFragment" />
+        <action
+            android:id="@+id/action_listWorkersFragment_to_myHomeFragment"
+            app:destination="@id/myHomeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listProductsFragment"
+        android:name="com.noma.livestockcare.fragments.ListProductsFragment"
+        android:label="fragment_list_products"
+        tools:layout="@layout/fragment_list_products" >
+        <action
+            android:id="@+id/action_listProductsFragment_to_myHomeFragment"
+            app:destination="@id/myHomeFragment" />
     </fragment>
 </navigation>
