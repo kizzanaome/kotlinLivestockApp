@@ -2,6 +2,7 @@ package com.noma.livestockcare.fragments
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -58,6 +59,7 @@ class AddFarmerFragment : Fragment() {
 
         val addWorkerButton = inflater.findViewById<Button>(R.id.add_worker_btn)
 
+
         addWorkerButton.setOnClickListener{
             val first_name = inflater.findViewById<TextInputEditText>(R.id.edit_f_name).text.toString()
             val last_name = inflater.findViewById<TextInputEditText>(R.id.edit_l_name).text.toString()
@@ -68,12 +70,13 @@ class AddFarmerFragment : Fragment() {
 
              CoroutineScope(Dispatchers.IO).launch {
 
+
                 try {
                     val dbBuilder = DBBuilder()
                     val db = dbBuilder.createDB(requireContext())
                     val dao = db.workersDao()
 
-                    /** insert data to the Database **/
+                    /** insert data to the Room Database **/
                     val worker = WorkersModel(
                         id = null,
                         firstName = first_name,
@@ -88,34 +91,42 @@ class AddFarmerFragment : Fragment() {
                     val insertQuery = dao.insertWorker(worker)
                     Log.d("insertQuery", "$insertQuery")
 
+
                     /** insert data to the API **/
-                    val worker2 = User(
-                        id = null,
-                        f_name = first_name,
-                        l_name = last_name,
-                        title = role,
-                        phone = phone_number,
-                        image = "image.jpg",
-                        password = password,
-                        age = age,
-                        gender = "female",
+                    val apiService = RetrofitInstance().createRetrofit()
+                    val apiResponse = apiService.addWorker(
+                        first_name,
+                        last_name,
+                        role,
+                        phone_number,
+                        password,
+                        age,
+                         "female",
+                        "image.jpg",
+
                     )
 
-                    val apiService = RetrofitInstance().createRetrofit()
-                    val apiResponse = apiService.addWorker(worker2)
-                    Log.d("Worker modal", "${apiResponse.toString()}")
 
-//                    val response = apiResponse.response
-//                    Log.d("apiResponse", "${apiResponse.response}")
-//                 Log.e("RETROFIT_ERROR", apiResponse.code().toString())
-//
-//                    val users = apiResponse.response
+                    /** Display Toast **/
+                    withContext(Dispatchers.Main) {
+                        /** Display Toast **/
+                        val customToastLayout = layoutInflater.inflate(R.layout.customlayout,null)
+                        val customToast = Toast(requireContext())
+//                        customToast.setText(apiResponse?.message?.toString())
+//                    customToast.setText(apiResponse?.message?.toString())
+                    customToast.view = customToastLayout
+                        customToast.setGravity(Gravity.BOTTOM,0,0)
+                        customToast.duration = Toast.LENGTH_LONG
+                        customToast.show()
 
-//                    withContext(Dispatchers.Main) {
-//                        activityAdapter.setUsers(users)
-//                    }
+                    }
                 }catch (t:Throwable){
-                    Toast.makeText(requireContext(), "No internet connection",Toast.LENGTH_LONG).show()
+                    Log.d("Worker modal", "$t")
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(requireContext(), "Something went wrong!, Please try again later",Toast.LENGTH_LONG).show()
+
+                    }
+
                 }
             }
 

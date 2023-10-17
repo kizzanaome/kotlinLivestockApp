@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,6 +34,7 @@ class ListWorkersFragment : Fragment() {
 
         /** Inflate the layout for this fragment */
         val inflater = inflater.inflate(R.layout.fragment_list_workers, container, false)
+        inflater.findViewById<ProgressBar>(R.id.loader).visibility = View.VISIBLE
 
         val addFarmerButton = inflater.findViewById<FloatingActionButton>(R.id.add_farmer)
         addFarmerButton.setOnClickListener{
@@ -49,10 +51,13 @@ class ListWorkersFragment : Fragment() {
             try {
                 val apiService = RetrofitInstance().createRetrofit()
                 val apiResponse = apiService.getWorkers()
+
                 val users = apiResponse.response
 
                 withContext(Dispatchers.Main) {
+                    inflater.findViewById<ProgressBar>(R.id.loader).visibility = View.GONE
                     activityAdapter.setUsers(users)
+
                 }
             } catch (t: Throwable) {
                 Toast.makeText(requireContext(), "No internet connection",Toast.LENGTH_LONG).show()
@@ -65,6 +70,7 @@ class ListWorkersFragment : Fragment() {
             val db = dbBuilder.createDB(requireContext())
             val dao = db.workersDao()
             val workers = dao.getAllWorkers()
+
             Log.d("workers", "$workers")
             list = workers
 

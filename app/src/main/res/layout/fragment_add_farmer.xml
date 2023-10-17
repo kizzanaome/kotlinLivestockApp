@@ -302,6 +302,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout4" />
 
+
 <!--    <ImageView-->
 <!--        android:id="@+id/cow_footer_image"-->
 <!--        android:layout_width="90dp"-->
